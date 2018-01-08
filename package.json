@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development node ./code/server.js",
-    "start": "webpack && NODE_ENV=production node ./result/server.js"
+    "start": "webpack && NODE_ENV=production node ./result/server.js",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC",
