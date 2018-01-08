@@ -2,8 +2,10 @@ var path = require("path"),
     express = require("express"),
     request = require("request");
 
+console.log('port', process.env.PORT);
+
 var DIST_DIR = path.join(__dirname, "../result"),
-    PORT = 3000,
+    PORT = process.env.PORT || 3000,
     app = express();
 console.log('env', process.env.NODE_ENV);
 //Serving the files on the dist folder
