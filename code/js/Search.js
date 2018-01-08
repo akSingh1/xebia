@@ -11,27 +11,22 @@ class Search extends Component {
             planets:[],
             error: '',
             selected: {},
-            isLoading: false
+            isLoading: false,
+            showList: true
         }
-
-    }
-
-    componentWillMount () {
-
-    }
-
-    componentDidMount () {
 
     }
 
     handleSearch = (e) => {
         this.setState({
             planetName: e.target.value,
-            isLoading: true
+            isLoading: true,
+            showList: false
+
         });
         Service.fetchPlanets(e.target.value).then( (resp) => {
             this.setState({
-                isLoading: false
+                isLoading: false,
             });
             const { results=[] } = resp;
             const sortedPlanets = results.sort( (a,b) => {
@@ -44,24 +39,34 @@ class Search extends Component {
             });
             this.setState({
                 planets: sortedPlanets,
-                error: ''
+                error: '',
+                showList: true
             })
         }).catch((err) => {
             this.setState({
                 error: err.message,
-                isLoading: false
+                isLoading: false,
+                showList: false
             });
         });
     };
 
+    handleFocus = () => {
+        this.setState({
+            showList: true
+        })
+    }
+
     onPlanetClick(planet) {
         this.setState({
-            selected: planet
-        });
+            selected: planet,
+            showList: false,
+            planetName: planet.name
+        })
     }
 
     render() {
-        const {planetName, planets, error, selected, isLoading} = this.state;
+        const {planetName, planets, error, selected, isLoading, showList} = this.state;
 
         return (
             <Page>
@@ -78,11 +83,11 @@ class Search extends Component {
                                 {
                                     isLoading && <img className="loading" src="/Spinner.gif" alt="Loading..."/>
                                 }
-                                <input id="searchText" type="text" value={planetName} placeholder="Start typing..." onChange={this.handleSearch}/>
+                                <input onFocus={this.handleFocus} id="searchText" type="text" value={planetName} placeholder="Start typing..." onChange={this.handleSearch}/>
                                 <ul>
                                     {
-                                        planets.map((planet, i) => {
-                                            return <li key={planet.name} onClick={ () => {this.onPlanetClick(planet)}}>{planet.name}</li>
+                                        showList && planets.map((planet, i) => {
+                                            return <li style={{fontSize: `${54-i*3}px`}}key={planet.name} onClick={ () => {this.onPlanetClick(planet)}}>{planet.name}</li>
                                         })
                                     }
                                 </ul>
@@ -91,7 +96,7 @@ class Search extends Component {
                         <div className="planetInfo">
                             {
                                 Object.keys(selected).length > 0 &&
-                                <div >
+                                <div className="infoList">
                                     <div>
                                         <span>Name:</span><span>{selected.name}</span>
                                     </div>
@@ -114,17 +119,11 @@ class Search extends Component {
                             }
 
                         </div>
-
-
                     </div>
-
-
-
                 </div>
             </Page>
         );
     }
-
 }
 
 export default Search;

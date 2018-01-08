@@ -8,21 +8,15 @@ class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            isProcessing: false
         }
-    }
-
-    componentWillMount () {
-
-    }
-
-    componentDidMount () {
-        console.log('props',this.props);
     }
 
     setError = (error = 'Please enter valid username and password.') => {
         this.setState({
-            error
+            error,
+            isProcessing: false
         });
     }
 
@@ -44,6 +38,9 @@ class Login extends Component {
             this.setError();
             return;
         }
+        this.setState({
+            isProcessing: true
+        });
         Service.fetchPeople(username).then( (resp) => {
             if(resp.count === 1 && resp.results[0].birth_year === password) {
                 window.localStorage.setItem('isAuthenticated', true);
@@ -61,7 +58,7 @@ class Login extends Component {
     };
 
     render() {
-        const { username, password, error} = this.state;
+        const { username, password, error, isProcessing} = this.state;
         return (
             <Page isLogin={true}>
                 <div className="loginContainer">
@@ -75,7 +72,7 @@ class Login extends Component {
                             <input type="password" id="password" placeholder="Password" value={password} onChange={this.onPasswordChange}/>
                         </div>
                         <div className="loginBox alignCenter">
-                            <input className="loginBtn" type="button" value="Login" onClick={this.handleLogin}/>
+                            <input className="loginBtn" type="button" disabled={isProcessing} value={isProcessing ? "Logging in...": "Login"} onClick={this.handleLogin}/>
                         </div>
 
                         <div className="loginBox error">{error}</div>

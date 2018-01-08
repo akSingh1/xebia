@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {withRouter} from "react-router-dom";
 
-
-
 const LogoutBtn = withRouter(({ history }) => (
     <button
         type='button'
@@ -15,7 +13,6 @@ const LogoutBtn = withRouter(({ history }) => (
         Sign out
     </button>
 ));
-
 
 const Page = ({children, isLogin=false}) => (
     <div className="app">
