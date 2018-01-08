@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development node ./code/server.js",
     "start": "webpack && NODE_ENV=production node ./result/server.js",
-    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js && NODE_ENV=production node ./result/server.js"
   },
   "author": "",
   "license": "ISC",
