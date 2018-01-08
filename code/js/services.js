@@ -42,7 +42,7 @@ const Service = (function () {
             return fetchWrapper(`https://swapi.co/api/people?search=${name}`);
         },
         fetchPlanets: (planet) => {
-            return fetchWrapper(`https://swapi.co/api/planet?search=${planet}`);
+            return fetchWrapper(`https://swapi.co/api/planets?search=${planet}`);
         }
     }
 } ());

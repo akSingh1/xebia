@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Service from './services';
+import Page from './Page';
 
 class Login extends Component {
 
@@ -62,14 +63,27 @@ class Login extends Component {
     render() {
         const { username, password, error} = this.state;
         return (
-            <div>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" placeholder="Username" value={username} onChange={this.onUsernameChange}/>
-                <label htmlFor="username">Password</label>
-                <input type="password" id="password" placeholder="Password" value={password} onChange={this.onPasswordChange}/>
-                <input type="buton" value="Login" onClick={this.handleLogin}/>
-                <div>{error}</div>
-            </div>
+            <Page isLogin={true}>
+                <div className="loginContainer">
+                    <div className="loginCenter">
+                        <div className="loginBox">
+                            <label htmlFor="username">Username:</label>
+                            <input type="text" id="username" placeholder="Username" value={username} onChange={this.onUsernameChange}/>
+                        </div>
+                        <div className="loginBox">
+                            <label htmlFor="password">Password:</label>
+                            <input type="password" id="password" placeholder="Password" value={password} onChange={this.onPasswordChange}/>
+                        </div>
+                        <div className="loginBox alignCenter">
+                            <input className="loginBtn" type="button" value="Login" onClick={this.handleLogin}/>
+                        </div>
+
+                        <div className="loginBox error">{error}</div>
+                    </div>
+
+                </div>
+            </Page>
+
 
         );
     }
